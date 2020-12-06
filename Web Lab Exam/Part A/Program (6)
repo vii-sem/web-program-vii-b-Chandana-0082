@@ -1,0 +1,117 @@
+<html> 
+<head>
+ <title>Validation Form </title>
+ <script type="text/javascript">
+ var divs = new Array();
+ divs[0] = "errFirst";
+ divs[1] = "errLast";
+ divs[2] = "errGender";
+ divs[3] = "errEmail";
+ divs[4] = "errUid";
+ divs[5] = "errPassword";
+ divs[6] = "errConfirm";
+ function validate()
+ {
+ var inputs = new Array();
+ inputs[0] = document.getElementById('first').value;
+ inputs[1] = document.getElementById('last').value;
+ inputs[2] = document.getElementById('Gender').value;
+ inputs[3] = document.getElementById('email').value;
+ inputs[4] = document.getElementById('uid').value;
+ inputs[5] = document.getElementById('password').value;
+ inputs[6] = document.getElementById('confirm').value;
+ var errors = new Array();
+ errors[0] = "<span style='color:red'>Enter your first name!</span>";
+ errors[1] = "<span style='color:red'>Enter your last name!</span>";
+ errors[2] = "<span style='color:red'>Enter your Gender!</span>";
+ errors[3] = "<span style='color:red'>Enter your email!</span>";
+ errors[4] = "<span style='color:red'>Enter your user id!</span>";
+ errors[5] = "<span style='color:red'>Enter your password!</span>";
+ errors[6] = "<span style='color:red'>Confirm your password!</span>";
+ for (i in inputs)
+ {
+ var errMessage = errors[i];
+ var div = divs[i];
+ if (inputs[i] == "")
+ document.getElementById(div).innerHTML = errMessage;
+ else if (i==3)
+ {
+ var at_position=inputs[i].indexOf("@");
+ var dot_position=inputs[i].lastIndexOf(".");
+ if (at_position<1 || dot_position<at_position+2 || dot_position+2>=inputs[i].length)
+ document.getElementById('errEmail').innerHTML = "<span style='color: red'>Kindly enter a valid email address!</span>";
+ else
+ document.getElementById(div).innerHTML = "OKAY!";
+ }
+ else if (i==6)
+ {
+ var first_pass = document.getElementById('password').value;
+ var second_pass = document.getElementById('confirm').value;
+ if (second_pass != first_pass)
+ document.getElementById('errConfirm').innerHTML = "<span style='color:red'>PASSWORDS DON'T MATCH!!!</span>";
+ else
+ document.getElementById(div).innerHTML = "OKAY!";
+ } 
+ else
+ document.getElementById(div).innerHTML = "OKAY!";
+ }
+ }
+ function finalValidate()
+ {
+ var count = 0;
+ for(i=0;i<=6;i++)
+ {
+ var div = divs[i];
+ if(document.getElementById(div).innerHTML == "OKAY!")
+ count = count + 1;
+ }
+ if(count == 7)
+ document.getElementById("errFinal").innerHTML = "DATA ENTERED IS CORRECT!!!";
+ }
+ </script>
+</head>
+<body>
+ <table id="table1">
+ <tr>
+ <td>First Name:</td>
+ <td><input type="text" id="first" onkeyup="validate();" /></td>
+ <td><div id="errFirst"></div></td>
+ </tr>
+ <tr>
+ <td>Last Name:</td>
+ <td><input type="text" id="last" onkeyup="validate();"/></td>
+ <td><div id="errLast"></div></td>
+ </tr>
+ <tr>
+ <td>Gender:</td>
+ <td><input type="text" id="Gender" onkeyup="validate();"/></td>
+ <td><div id="errGender"></div></td>
+ </tr>
+ <tr>
+ <td>Email:</td>
+ <td><input type="text" id="email" onkeyup="validate();"/></td>
+ <td><div id="errEmail"></div></td>
+ </tr>
+ <tr>
+ <td>User Id:</td>
+ <td><input type="text" id="uid" onkeyup="validate();"/></td>
+ <td><div id="errUid"></div></td>
+ </tr>
+ <tr>
+ <td>Password:</td>
+ <td><input type="password" id="password" onkeyup="validate();"/></td>
+ <td><div id="errPassword"></div></td>
+ </tr>
+ <tr>
+ <td>Confirm Password:</td>
+ <td><input type="password" id="confirm" onkeyup="validate();"/></td>
+ <td><div id="errConfirm"></div></td>
+ </tr>
+ <tr> 
+ <td><input type="button" id="create" value="Create"
+ onclick="validate();finalValidate();"/></td>
+ <td><div id="errFinal"></div></td>
+ </tr>
+ </table>
+</body>
+</html>
